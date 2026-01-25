@@ -1,27 +1,33 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using PasMan.Models;
+using PasManApp.Services;
+using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace PasMan.Views;
 
 public partial class MainWindow : Window
 {
+    private VaultManager vaultManager;
+
+    private string masterPassword = "gDhuG1df71sfd";
     public MainWindow()
     {
         InitializeComponent();
-    }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (double.TryParse(Celsius.Text, out double C))
+        vaultManager = new VaultManager();
+        vaultManager.OpenVault(masterPassword);
+        
+        var allEntries = vaultManager.SearchPasswordEntries("");
+
+        foreach (var passwordEntry in allEntries)
         {
-            var F = C * (9d / 5d) + 32;
-            Fahrenheit.Text = F.ToString("0.0");
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = passwordEntry.Title;
+            PasswordListBox.Items.Add(textBlock);
         }
-        else
-        {
-            Celsius.Text = "0";
-            Fahrenheit.Text = "0";
-        }
+
     }
 }

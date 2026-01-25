@@ -8,7 +8,6 @@
     Title="PasMan"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
     mc:Ignorable="d">
 
@@ -17,52 +16,20 @@
             This only sets the DataContext for the previewer in an IDE,
             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
-        <vm:MainWindowViewModel />
     </Design.DataContext>
-    <StackPanel>
-        <Border
-            Margin="5"
-            Background="DarkBlue"
-            CornerRadius="10">
-            <TextBlock
-                Margin="5"
-                HorizontalAlignment="Center"
-                FontSize="24"
-                Text="Temperature Converter" />
-        </Border>
-        <Grid
-            Margin="5"
-            ColumnDefinitions="120, 100"
-            RowDefinitions="Auto, Auto"
-            ShowGridLines="False">
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Margin="10">
-                Celsius
-            </TextBlock>
-            <TextBox
-                Name="Celsius"
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,5"
-                Text="0" />
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="10">
-                Fahrenheit
-            </TextBlock>
-            <TextBox
-                Name="Fahrenheit"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="0,5"
-                IsReadOnly="True"
-                Focusable="False"
-                IsInactiveSelectionHighlightEnabled="False"
-                Text="0" />
-        </Grid>
-        <Button HorizontalAlignment="Center" Click="Button_OnClick">Calculate</Button>
+    <StackPanel Orientation="Horizontal" Spacing="20">
+        <StackPanel
+            Width="200"
+            Orientation="Vertical"
+            Spacing="10">
+            <TextBox x:Name="SearchTextBox" Watermark="Search" />
+            <ListBox x:Name="PasswordListBox" SelectionMode="Single" />
+            <Button>Add new</Button>
+        </StackPanel>
+        <StackPanel Width="500">
+            <TextBlock>Current pass info</TextBlock>
+            
+        </StackPanel>
     </StackPanel>
+
 </Window>
