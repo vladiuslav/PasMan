@@ -1,0 +1,64 @@
+## .gitignore for .NET (Core) projects, Visual Studio, Rider and Avalonia outputs
+# See https://github.com/dotnet/core/blob/main/.gitignore and
+# https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+# Build directories
+**/bin/
+**/obj/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code settings (optional - ignore workspace settings)
+.vscode/
+
+# NuGet
+# NuGet Packages
+**/packages/*
+*.nupkg
+*.snupkg
+.nuget/
+
+# Dotnet publish output
+publish/
+artifacts/
+
+# Runtime files
+*.runtimeconfig.json
+*.deps.json
+*.dll
+*.exe
+*.pdb
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# User secrets
+secrets.json
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Avalonia/GUI generated or intermediate files
+# (most Avalonia build outputs end up in `bin/` and `obj/` already)
+*.xaml.g.cs
+
+# Misc
+*.ilk
+*.meta
+*.iobj
