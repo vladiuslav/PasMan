@@ -19,6 +19,22 @@
         -->
         <viewmodels:MainWindowViewModel />
     </Design.DataContext>
+    <Window.Styles>
+        <Style Selector="TextBox.editor">
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style Selector="Button.action">
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+        <Style Selector="Button.copy">
+            <Setter Property="MinWidth" Value="52" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+    </Window.Styles>
     <StackPanel
         Margin="10"
         Orientation="Horizontal"
@@ -45,24 +61,99 @@
         </StackPanel>
         <StackPanel Width="500" Margin="10,10">
             <TextBlock FontSize="25">Password Entry</TextBlock>
-            <TextBlock Text="{Binding SelectedItem.Id}" Margin="10"/>
+            <TextBlock Margin="0,6,0,6" Text="{Binding SelectedItem.Id}" />
+            <TextBlock
+                Foreground="DarkOrange"
+                FontWeight="SemiBold"
+                IsVisible="{Binding IsSelectedItemDirty}"
+                Text="Not saved" />
             <TextBlock Margin="10">Title</TextBlock>
-            <TextBox Text="{Binding SelectedItem.Title}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <TextBox Classes="editor" Text="{Binding SelectedItem.Title}" />
+                <Button
+                    Classes="copy"
+                    Grid.Column="1"
+                    Click="OnCopyClick"
+                    Tag="{Binding SelectedItem.Title}">
+                    Copy
+                </Button>
+            </Grid>
             <TextBlock Margin="10">Login</TextBlock>
-            <TextBox Text="{Binding SelectedItem.Login}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <TextBox Classes="editor" Text="{Binding SelectedItem.Login}" />
+                <Button
+                    Classes="copy"
+                    Grid.Column="1"
+                    Click="OnCopyClick"
+                    Tag="{Binding SelectedItem.Login}">
+                    Copy
+                </Button>
+            </Grid>
             <TextBlock Margin="10">Password</TextBlock>
-            <TextBox Text="{Binding SelectedItem.Password}" />
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <TextBox
+                    Classes="editor"
+                    PasswordChar="{Binding PasswordMaskChar}"
+                    Text="{Binding SelectedItem.Password}" />
+                <Button
+                    Classes="action"
+                    Grid.Column="1"
+                    Command="{Binding TogglePasswordVisibilityCommand}"
+                    Content="{Binding PasswordVisibilityButtonText}" />
+                <Button
+                    Classes="copy"
+                    Grid.Column="2"
+                    Click="OnCopyClick"
+                    Tag="{Binding SelectedItem.Password}">
+                    Copy
+                </Button>
+            </Grid>
             <TextBlock Margin="10">Url</TextBlock>
-            <TextBox Text="{Binding SelectedItem.Url}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <TextBox Classes="editor" Text="{Binding SelectedItem.Url}" />
+                <Button
+                    Classes="copy"
+                    Grid.Column="1"
+                    Click="OnCopyClick"
+                    Tag="{Binding SelectedItem.Url}">
+                    Copy
+                </Button>
+            </Grid>
+            <TextBlock
+                Foreground="IndianRed"
+                IsVisible="{Binding HasUrlValidationError}"
+                Text="{Binding UrlValidationMessage}" />
             <TextBlock Margin="10">Note</TextBlock>
-            <TextBox Text="{Binding SelectedItem.Note}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <TextBox
+                    Classes="editor"
+                    AcceptsReturn="True"
+                    Height="130"
+                    Text="{Binding SelectedItem.Note}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Classes="copy"
+                    VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Click="OnCopyClick"
+                    Tag="{Binding SelectedItem.Note}">
+                    Copy
+                </Button>
+            </Grid>
+            <Grid
+                Margin="10,10,10,0"
+                ColumnDefinitions="Auto,*"
+                RowDefinitions="Auto,Auto"
+                ColumnSpacing="8"
+                RowSpacing="6">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Created:" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.CreatedAt}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Updated:" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.UpdatedAt}" />
+            </Grid>
             <WrapPanel>
-                <TextBlock Margin="10" Text="{Binding SelectedItem.UpdatedAt}"/>
-                <TextBlock Margin="10" Text="{Binding SelectedItem.UpdatedAt}"/>
-            </WrapPanel>
-            <WrapPanel>
-                <Button Margin="10" Command="{Binding ChangeItemCommand}">Save</Button>
-                <Button Margin="10" Click="OnDeleteClick">Delete</Button>
+                <Button Classes="action" Margin="10" Click="OnSaveClick">Save</Button>
+                <Button Classes="action" Margin="10" Click="OnDeleteClick">Delete</Button>
             </WrapPanel>
         </StackPanel>
     </StackPanel>

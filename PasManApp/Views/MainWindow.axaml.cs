@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using System;
 using PasMan.ViewModels;
 
@@ -63,5 +65,49 @@ public partial class MainWindow : Window
         }
 
         viewModel.RemoveItemCommand.Execute(null);
+    }
+
+    private async void OnSaveClick(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not MainWindowViewModel viewModel || viewModel.SelectedItem is null)
+        {
+            return;
+        }
+
+        if (!viewModel.ChangeItemCommand.CanExecute(null))
+        {
+            return;
+        }
+
+        var confirmDialog = new SaveConfirmationWindow(viewModel.SelectedItem.Title);
+        var shouldSave = await confirmDialog.ShowDialog<bool>(this);
+        if (!shouldSave)
+        {
+            return;
+        }
+
+        viewModel.ChangeItemCommand.Execute(null);
+    }
+
+    private async void OnCopyClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button)
+        {
+            return;
+        }
+
+        var text = button.Tag?.ToString();
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel?.Clipboard is null)
+        {
+            return;
+        }
+
+        await topLevel.Clipboard.SetTextAsync(text);
     }
 }
