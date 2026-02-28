@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:PasMan.ViewModels"
+    xmlns:viewmodels="using:PasMan.ViewModels"
     Title="PasMan"
-    d:DesignHeight="450"
+    d:DesignHeight="600"
     d:DesignWidth="800"
+    x:DataType="viewmodels:MainWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
     mc:Ignorable="d">
 
@@ -16,19 +17,53 @@
             This only sets the DataContext for the previewer in an IDE,
             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
+        <viewmodels:MainWindowViewModel />
     </Design.DataContext>
-    <StackPanel Orientation="Horizontal" Spacing="20">
+    <StackPanel
+        Margin="10"
+        Orientation="Horizontal"
+        Spacing="20">
         <StackPanel
-            Width="200"
+            Width="250"
             Orientation="Vertical"
             Spacing="10">
-            <TextBox x:Name="SearchTextBox" Watermark="Search" />
-            <ListBox x:Name="PasswordListBox" SelectionMode="Single" />
-            <Button>Add new</Button>
+            <TextBox x:Name="SearchTextBox"
+                     Watermark="Search"
+                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <ScrollViewer>
+                <ListBox
+                    ItemsSource="{Binding PasswordEntries}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    DisplayMemberBinding="{Binding Title}"
+                    SelectionMode="Single" />
+            </ScrollViewer>
+            <WrapPanel>
+                <TextBox Margin="10" Text="{Binding NewTitleName}" Watermark="New Title" />
+                <Button Margin="5,10" Command="{Binding AddItemCommand}">Add new</Button>
+            </WrapPanel>
+
         </StackPanel>
-        <StackPanel Width="500">
-            <TextBlock>Current pass info</TextBlock>
-            
+        <StackPanel Width="500" Margin="10,10">
+            <TextBlock FontSize="25">Password Entry</TextBlock>
+            <TextBlock Text="{Binding SelectedItem.Id}" Margin="10"/>
+            <TextBlock Margin="10">Title</TextBlock>
+            <TextBox Text="{Binding SelectedItem.Title}" />
+            <TextBlock Margin="10">Login</TextBlock>
+            <TextBox Text="{Binding SelectedItem.Login}" />
+            <TextBlock Margin="10">Password</TextBlock>
+            <TextBox Text="{Binding SelectedItem.Password}" />
+            <TextBlock Margin="10">Url</TextBlock>
+            <TextBox Text="{Binding SelectedItem.Url}" />
+            <TextBlock Margin="10">Note</TextBlock>
+            <TextBox Text="{Binding SelectedItem.Note}" />
+            <WrapPanel>
+                <TextBlock Margin="10" Text="{Binding SelectedItem.UpdatedAt}"/>
+                <TextBlock Margin="10" Text="{Binding SelectedItem.UpdatedAt}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Button Margin="10" Command="{Binding ChangeItemCommand}">Save</Button>
+                <Button Margin="10" Command="{Binding RemoveItemCommand}">Delete</Button>
+            </WrapPanel>
         </StackPanel>
     </StackPanel>
 

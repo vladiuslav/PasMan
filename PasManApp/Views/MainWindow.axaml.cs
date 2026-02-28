@@ -16,18 +16,5 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-
-        vaultManager = new VaultManager();
-        vaultManager.OpenVault(masterPassword);
-        
-        var allEntries = vaultManager.SearchPasswordEntries("");
-
-        foreach (var passwordEntry in allEntries)
-        {
-            TextBlock textBlock = new TextBlock();
-            textBlock.Text = passwordEntry.Title;
-            PasswordListBox.Items.Add(textBlock);
-        }
-
     }
 }
