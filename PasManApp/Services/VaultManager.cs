@@ -143,6 +143,16 @@ public class VaultManager
     }
 
     /// <summary>
+    /// Persists the current unlocked vault to disk using the provided master password.
+    /// </summary>
+    /// <param name="masterPassword">The master password used to encrypt the vault.</param>
+    public void SaveVault(string masterPassword)
+    {
+        EnsureUnlocked();
+        SaveCurrentState(masterPassword);
+    }
+
+    /// <summary>
     /// Opens and decrypts the vault using the provided master password.
     /// If the vault file does not exist, creates an empty vault in memory.
     /// </summary>

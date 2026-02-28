@@ -1,0 +1,24 @@
+<Window
+    x:Class="PasMan.Views.DeleteConfirmationWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Confirm Delete"
+    Width="420"
+    Height="170"
+    CanResize="False"
+    WindowStartupLocation="CenterOwner">
+
+    <StackPanel Margin="16" Spacing="12">
+        <TextBlock
+            x:Name="MessageTextBlock"
+            TextWrapping="Wrap"
+            Text="Are you sure you want to delete this password entry?" />
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Right"
+            Spacing="8">
+            <Button Click="OnCancelClick">Cancel</Button>
+            <Button IsDefault="True" Click="OnDeleteClick">Delete</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
